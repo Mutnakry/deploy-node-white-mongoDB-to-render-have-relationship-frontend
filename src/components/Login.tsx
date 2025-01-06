@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
@@ -46,42 +46,7 @@ const HomePage: React.FC = () => {
     }
   };
 
-  const product = [
-    {
-      id: 1,
-      names: `<form onSubmit={handleSubmit}>
-     <div className="mb-4 space-y-2">
-       <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-         អ៊ីមែល
-       </label>
-       <input
-         type="email"
-         id="email"
-         name="email"
-         className="p-2 placeholder:font-NotoSansKhmer w-full border-2 outline-none bg-gray-50/20 focus:border-blue-500"
-         value={email}
-         onChange={handleChange}
-         required
-       />
-     </div>
-     <div className="mb-4 space-y-2 relative">
-       <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-         លេខសម្ថាត់
-       </label>
-     </div>
-     {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-     <div className="flex justify-end">
-       <button
-         type="submit"
-         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-       >
-         ចូលគណនី
-       </button>
-     </div>
-   </form>
-      `
-    }
-  ];
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(prev => !prev);

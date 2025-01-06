@@ -110,6 +110,7 @@ function Home() {
   return (
     <div className='pt-24'>
       <Navbar />
+      {user_rol}/{userEmail}
       <div className='max-w-screen-2xl mx-auto px-4'>
         {loading ? (
           <div className='flex gap-4 py-2'>
