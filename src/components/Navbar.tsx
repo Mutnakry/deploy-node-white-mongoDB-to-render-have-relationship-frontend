@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef } from "react";
 import { FaSearch, FaBars, FaTimes, FaLaptopCode } from "react-icons/fa";
 import { GrFormNext } from "react-icons/gr";
@@ -6,7 +5,7 @@ import { IoChevronBack } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import {API_URL} from '../services/api'
+import { API_URL } from '../services/api'
 
 
 interface Course {
@@ -37,6 +36,7 @@ function Navbar() {
 
 
 
+
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   const toggleDropdown = () => {
@@ -57,28 +57,28 @@ function Navbar() {
   }, []);
 
 
-
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem("user_role");
-    localStorage.removeItem("user_email");
-    localStorage.removeItem("last_name");
-    localStorage.removeItem("first_name");
-    localStorage.removeItem("user_age");
+    localStorage.removeItem("email");
+    localStorage.removeItem("lastName");
+    localStorage.removeItem("firstName");
+    localStorage.removeItem("age");
     localStorage.removeItem("gender");
-    localStorage.removeItem("user_id");
+    localStorage.removeItem("_id");
     setUserEmail(null);
-    window.location.href = "/";
+    window.location.href = "/"; 
   };
+  
 
   useEffect(() => {
-    const storedEmail = localStorage.getItem("user_email");
-    const storedLastName = localStorage.getItem("last_name");
-    const storedFirstName = localStorage.getItem("first_name");
+    const storedEmail = localStorage.getItem("email");
+    const storedLastName = localStorage.getItem("lastName");
+    const storedFirstName = localStorage.getItem("firstName");
     const storedGender = localStorage.getItem("gender");
-    const storedAge = localStorage.getItem("user_age");
+    const storedAge = localStorage.getItem("age");
     const storedRol = localStorage.getItem("user_role");
-    const storedID = localStorage.getItem("user_id");
+    const storedID = localStorage.getItem("_id");
 
     if (storedEmail) {
       setUserEmail(storedEmail);
@@ -222,6 +222,7 @@ function Navbar() {
               </>
             )}
           </div>
+          
 
           {/* Hamburger Menu (Mobile) */}
           <button className="md:hidden text-2xl text-white" onClick={toggleMenu}>

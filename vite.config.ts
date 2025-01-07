@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: '0.0.0.0', // Ensures the server listens on all network interfaces
-    port: Number(process.env.PORT) || 5000, // Convert process.env.PORT to a number
+    port: Number(process.env.PORT) || 5001, // Convert process.env.PORT to a number
   },
 })

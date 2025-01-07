@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
+import { API_URL } from '../services/api'
 
 const HomePage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [error, setError] = useState("");
-
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -21,28 +21,35 @@ const HomePage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/users/login", {
-        user_email: email,
-        user_password: password,
+      const response = await axios.post(`${API_URL}api/users/login`, {
+        email: email,
+        password: password,
       });
+      console.log('gmail:', email)
+      console.log('pass:', password)
+
       console.log("Login successful", response.data);
 
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user_id", response.data.user_id);
-      localStorage.setItem("user_role", response.data.user_role);
-      localStorage.setItem("user_email", response.data.user_email);
-      localStorage.setItem("last_name", response.data.last_name);
-      localStorage.setItem("first_name", response.data.first_name);
-      localStorage.setItem("user_age", response.data.user_age);
+      localStorage.setItem("_id", response.data._id);
+      localStorage.setItem("lastName", response.data.lastName);
+      localStorage.setItem("firstName", response.data.firstName);
+      localStorage.setItem("email", response.data.email);
+      localStorage.setItem("age", response.data.age);
       localStorage.setItem("gender", response.data.gender);
+
 
 
       window.location.href = "/";
     } catch (err) {
       console.error("Error logging in:", err);
       setError("Invalid email or password");
+    }
+    finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -106,9 +113,10 @@ const HomePage: React.FC = () => {
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  disabled={isSubmitting}
+                  className={`button_only_submit rounded ${isSubmitting ? 'opacity-50 cursor-not-allowed rounded' : ''}`}
                 >
-                  ចូលគណនី
+                  {isSubmitting ? 'កំពុងចូលគណនី....' : 'ចូលគណនី'}
                 </button>
               </div>
               <div className='flex space-x-3'>

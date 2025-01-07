@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import HomePage from './View/HomePage';
 import Login from './components/Login'
 import Register from './components/Register';
+import UserLogin from './View/personal/UserLogin';
 
 
 const App: React.FC = () => {
@@ -22,6 +23,7 @@ const App: React.FC = () => {
         <Route index element={<HomePage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
+        <Route path='/userLogin' element={<UserLogin/>}/>
       </Routes>
       <ToastContainer />
     </Router>

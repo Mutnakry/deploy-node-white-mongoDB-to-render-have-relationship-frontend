@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from '../services/api';
 import Navbar from "./Navbar";
 
 const Register: React.FC = () => {
@@ -8,12 +9,14 @@ const Register: React.FC = () => {
     const [password, setPassword] = useState<string>("");
     const [fname, setFname] = useState<string>("");
     const [age, setAge] = useState<string>("");
-    const [gender, setGender] = useState<string>("Male");
+    const [gender, setGender] = useState<string>("male");
     const [lname, setLname] = useState<string>("");
     const [repassword, setRepassword] = useState<string>("");
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [error, setFormError] = useState<string>("");
     const [Contype, setConType] = useState<"emailandpass" | "name">("emailandpass");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
 
     const navigate = useNavigate();
 
@@ -34,28 +37,32 @@ const Register: React.FC = () => {
                 return;
             }
         }
+        setIsSubmitting(true);
 
         setFormError("");
-        // Prepare the data for the API reques
-        const data = {
-            first_name: fname,
-            last_name: lname,
-            user_age: age,
+        const values = {
+            lastName: lname,
+            firstName: fname,
+            age: age,
             gender: gender,
-            user_email: email,
-            user_password: password
+            email: email,
+            password: password
         };
+        console.log(values)
 
         try {
-            // Send the registration request
-            const response = await axios.post('http://localhost:5000/api/users/register', data);
-            console.log('Registration successful', response.data);
+            const response = await axios.post(`${API_URL}api/users/register`, values);
+            console.log('Registration successful:', response);
             navigate("/login"); // Redirect after successful registration
         } catch (err) {
             console.error('Error registering user:', err);
             setFormError('Failed to register. Please try again.');
         }
+        finally {
+            setIsSubmitting(false);
+          }
     };
+
 
     const validateEmail = (email: string) => {
         // Regular expression for basic email validation
@@ -68,154 +75,156 @@ const Register: React.FC = () => {
         <div>
             <Navbar />
             <div className="flex mt-16 h-screen items-center justify-center bg-gradient-to-r from-gray-700 via-blue-200 to-gray-100 bg-opacity-50">
-              
-                    <div className=" mt-36 lg:mt-2 flex items-center p-2 justify-center ">
-                        <div className="bg-white p-6 md:w-[390px] w-[340px] mg:bg-opacity-60">
-                            <div className="flex justify-center items-center mb-10">
-                                <h2 className="text-2xl font-bold">ចូលគណនី</h2>
-                            </div>
-                            <form onSubmit={handleSubmit}>
-                                {Contype === "emailandpass" ? (
-                                    <>
-                                        <div className="mb-2 space-y-2">
-                                            <label htmlFor="email" className="font-NotoSansKhmer font-bold text-lg">
-                                                អុីម៉ែល : *
-                                            </label>
-                                            <input
-                                                type="email"
-                                                className="form-control w-full p-2 border rounded"
-                                                placeholder="សូមបញ្ចូលអ៊ីមែល"
-                                                value={email}
-                                                required
-                                                onChange={(e) => setEmail(e.target.value)}
-                                            />
-                                        </div>
-                                        <PasswordField
-                                            label="ពាក្យសម្ងាត់ : *"
-                                            placeholder="សូមបញ្ចូលពាក្យសម្ងាត់"
-                                            value={password}
-                                            showPassword={showPassword}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            toggleShowPassword={() => setShowPassword(!showPassword)}
-                                        />
-                                        <PasswordField
-                                            label="បញ្ជាក់ពាក្យសម្ងាត់ : *"
-                                            placeholder="សូមបញ្ចូលបញ្ជាក់ពាក្យសម្ងាត់"
-                                            value={repassword}
-                                            showPassword={showPassword}
-                                            onChange={(e) => setRepassword(e.target.value)}
-                                            toggleShowPassword={() => setShowPassword(!showPassword)}
-                                        />
-                                        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
-                                        <div className="w-full justify-end flex items-end">
-                                            <button
-                                                type="button"
-                                                onClick={() => {
-                                                    // Check if the password and repassword match
-                                                    if (password !== repassword || password === "") {
-                                                        setFormError("Passwords do not match");
-                                                    } else if (email === "") {
-                                                        setFormError("Email is required");
-                                                    } else if (!validateEmail(email)) {
-                                                        setFormError("Invalid email format");
-                                                    } else {
-                                                        setConType("name");
-                                                        setFormError("");
-                                                    }
-                                                }}
-                                                className="text-blue-500 text-sm underline mt-4  mr-8"
-                                            >
-                                                បន្ត
-                                            </button>
-                                        </div>
-
-                                    </>
-                                ) : (
-                                    <>
-                                        <div className="mb-2 space-y-2">
-                                            <label htmlFor="fname" className="font-NotoSansKhmer font-bold text-lg">
-                                                នាមខ្លួន : *
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control w-full p-2 border rounded"
-                                                placeholder="សូមបញ្ចូលឈ្មោះ"
-                                                value={fname}
-                                                required
-                                                onChange={(e) => setFname(e.target.value)}
-                                            />
-                                        </div>
-                                        <div className="mb-2 space-y-2">
-                                            <label htmlFor="lname" className="font-NotoSansKhmer font-bold text-lg">
-                                                នាមត្រកូល : *
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control w-full p-2 border rounded"
-                                                placeholder="សូមបញ្ចូលនាមត្រកូល"
-                                                value={lname}
-                                                required
-                                                onChange={(e) => setLname(e.target.value)}
-                                            />
-                                        </div>
-
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div className="mb-2 space-y-2">
-                                                <label htmlFor="age" className="font-NotoSansKhmer font-bold text-lg">
-                                                    អាយុ : *
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    className="form-control w-full p-2 border rounded"
-                                                    placeholder="សូមបញ្ចូលអាយុ"
-                                                    value={age}
-                                                    required
-                                                    onChange={(e) => setAge(e.target.value)}
-                                                />
-                                            </div>
-
-                                            <div className="mb-2 space-y-2">
-                                                <label htmlFor="gender" className="font-NotoSansKhmer font-bold text-lg">
-                                                    ភេទ
-                                                </label>
-                                                <select
-                                                    id="gender"
-                                                    className="form-control w-full p-2 border rounded"
-                                                    value={gender}
-                                                    onChange={(e) => setGender(e.target.value)}
-                                                >
-                                                    <option value="Male">ប្រុស</option>
-                                                    <option value="Eemale">ស្រី</option>
-                                                    <option value="Other">មិនមាន</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-                                        <div className="w-full justify-end flex items-end">
-                                            <button
-                                                type="button"
-                                                onClick={() => setConType("emailandpass")}
-                                                className="text-blue-500 text-sm underline mt-4"
-                                            >
-                                                ត្រឡប់មកវិញ
-                                            </button>
-                                        </div>
-                                        <button
-                                            type="submit"
-                                            className="btn btn-primary w-full p-2 bg-blue-500 text-white rounded mt-4"
-                                        >
-                                            បង្កើតគណនី
-                                        </button>
-                                    </>
-                                )}
-                            </form>
-
-                            <div className="pt-8"></div>
-
+                <div className=" mt-36 lg:mt-2 flex items-center p-2 justify-center ">
+                    <div className="bg-white p-6 md:w-[390px] w-[340px] mg:bg-opacity-60">
+                        <div className="flex justify-center items-center mb-10">
+                            <h2 className="text-2xl font-bold">ចូលគណនី</h2>
                         </div>
+                        <form onSubmit={handleSubmit}>
+                            {Contype === "emailandpass" ? (
+                                <>
+                                    <div className="mb-2 space-y-2">
+                                        <label htmlFor="email" className="font-NotoSansKhmer font-bold text-lg">
+                                            អុីម៉ែល : *
+                                        </label>
+                                        <input
+                                            type="email"
+                                            className="form-control w-full p-2 border rounded"
+                                            placeholder="សូមបញ្ចូលអ៊ីមែល"
+                                            value={email}
+                                            required
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                    </div>
+                                    <PasswordField
+                                        label="ពាក្យសម្ងាត់ : *"
+                                        placeholder="សូមបញ្ចូលពាក្យសម្ងាត់"
+                                        value={password}
+                                        showPassword={showPassword}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        toggleShowPassword={() => setShowPassword(!showPassword)}
+                                    />
+                                    <PasswordField
+                                        label="បញ្ជាក់ពាក្យសម្ងាត់ : *"
+                                        placeholder="សូមបញ្ចូលបញ្ជាក់ពាក្យសម្ងាត់"
+                                        value={repassword}
+                                        showPassword={showPassword}
+                                        onChange={(e) => setRepassword(e.target.value)}
+                                        toggleShowPassword={() => setShowPassword(!showPassword)}
+                                    />
+                                    {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+
+                                    <div className="w-full justify-end flex items-end">
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                // Check if the password and repassword match
+                                                if (password !== repassword || password === "") {
+                                                    setFormError("Passwords do not match");
+                                                } else if (email === "") {
+                                                    setFormError("Email is required");
+                                                } else if (!validateEmail(email)) {
+                                                    setFormError("Invalid email format");
+                                                } else {
+                                                    setConType("name");
+                                                    setFormError("");
+                                                }
+                                            }}
+                                            className="text-blue-500 text-sm underline mt-4  mr-8"
+                                        >
+                                            បន្ត
+                                        </button>
+                                    </div>
+
+                                </>
+                            ) : (
+                                <>
+                                    <div className="mb-2 space-y-2">
+                                        <label htmlFor="fname" className="font-NotoSansKhmer font-bold text-lg">
+                                            នាមខ្លួន : *
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control w-full p-2 border rounded"
+                                            placeholder="សូមបញ្ចូលឈ្មោះ"
+                                            value={fname}
+                                            required
+                                            onChange={(e) => setFname(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="mb-2 space-y-2">
+                                        <label htmlFor="lname" className="font-NotoSansKhmer font-bold text-lg">
+                                            នាមត្រកូល : *
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control w-full p-2 border rounded"
+                                            placeholder="សូមបញ្ចូលនាមត្រកូល"
+                                            value={lname}
+                                            required
+                                            onChange={(e) => setLname(e.target.value)}
+                                        />
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="mb-2 space-y-2">
+                                            <label htmlFor="age" className="font-NotoSansKhmer font-bold text-lg">
+                                                អាយុ : *
+                                            </label>
+                                            <input
+                                                type="number"
+                                                className="form-control w-full p-2 border rounded"
+                                                placeholder="សូមបញ្ចូលអាយុ"
+                                                value={age}
+                                                required
+                                                onChange={(e) => setAge(e.target.value)}
+                                            />
+                                        </div>
+
+                                        <div className="mb-2 space-y-2">
+                                            <label htmlFor="gender" className="font-NotoSansKhmer font-bold text-lg">
+                                                ភេទ
+                                            </label>
+                                            <select
+                                                id="gender"
+                                                className="form-control w-full p-2 border rounded"
+                                                value={gender}
+                                                onChange={(e) => setGender(e.target.value)}
+                                            >
+                                                <option value="male">ប្រុស</option>
+                                                <option value="female">ស្រី</option>
+                                                <option value="other">មិនមាន</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                                    <div className="w-full justify-end flex items-end">
+                                        <button
+                                            type="button"
+                                            onClick={() => setConType("emailandpass")}
+                                            className="text-blue-500 text-sm underline mt-4"
+                                        >
+                                            ត្រឡប់មកវិញ
+                                        </button>
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className={`button_only_submit rounded ${isSubmitting ? 'opacity-50 cursor-not-allowed rounded' : ''}`}
+                                    >
+                                        {isSubmitting ? 'កំពុងបង្កើតគណនី.....' : 'បង្កើតគណនី'}
+                                    </button>
+                                </>
+                            )}
+                        </form>
+
+                        <div className="pt-8"></div>
+
                     </div>
+                </div>
             </div>
         </div>
     );

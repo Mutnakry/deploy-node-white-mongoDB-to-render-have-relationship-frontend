@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        NotoSansKhmer: ['"Noto Sans Khmer"', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }
