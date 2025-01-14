@@ -7,7 +7,8 @@ import Navbar from '../components/Navbar.tsx';
 import Footer from '../components/Footer.tsx';
 
 interface Course {
-  cous_id: number;
+  
+  _id: number;
   cat_name: string;
   description: string;
   lesson: string;
@@ -159,13 +160,13 @@ function Home() {
           <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4'>
 
             {filteredCourses.map(course => (
-              <div key={course.cous_id} className={`relative`}>
+              <div key={course._id} className={`relative`}>
                 {course.status === "off" ? (
 
                   <div className="pointer-events-none relative cursor-none opacity-50 shadow-lg rounded-lg border hover:border-b-orange-500 hover:border-x-orange-500">
 
                     <Link
-                      to={`/modales/${course.cous_id}/course`}
+                      to={`/modales/${course._id}/course`}
                       className=''
                     >
                       <div className='bg-blue-800/50 text-sm justify-between flex px-2 py-1 rounded-t-lg'>
@@ -186,7 +187,7 @@ function Home() {
                         <h2 className='text-blue-500 text-xl pb-2'>{course.cat_name}</h2>
                         <div className="relative">
                           <p
-                            className={`text-md text-gray-700 space-x-4 ${expandedCourses[course.cous_id] ? 'block' : 'line-clamp-4'}`}
+                            className={`text-md text-gray-700 space-x-4 ${expandedCourses[course._id] ? 'block' : 'line-clamp-4'}`}
                           >
                             <span>{course.description}</span>
                           </p>
@@ -228,10 +229,10 @@ function Home() {
                     </div>
                     <div className='absolute bottom-12 transform'>
                       <button
-                        onClick={() => handleToggleDescription(course.cous_id)} // Pass the course ID
+                        onClick={() => handleToggleDescription(course._id)} // Pass the course ID
                         className="mt-3 px-8 text-blue-600 hover:underline focus:outline-none"
                       >
-                        {expandedCourses[course.cous_id] ? "បន្ថយ" : "មើលបន្ថែម"}
+                        {expandedCourses[course._id] ? "បន្ថយ" : "មើលបន្ថែម"}
                       </button>
                     </div>
 
@@ -241,7 +242,7 @@ function Home() {
 
                   <div className="shadow-lg relative rounded-lg border hover:border-b-blue-500 hover:border-x-blue-500">
 
-                    <Link to={isLoggedIn ? `/modales/${course.cous_id}/course` : "/login"} className=''>
+                    <Link to={isLoggedIn ? `/modales/${course._id}/course` : "/login"} className=''>
                       <div className='bg-blue-800/90 text-sm justify-between flex px-2 py-1 rounded-t-lg'>
                         <h2 className='px-3 py-1 text-white'>
                           {course.course_type} <span>Course</span>
@@ -260,7 +261,7 @@ function Home() {
                         <h2 className='text-blue-500 text-xl pb-2'>{course.cat_name}</h2>
                         <div className="relative">
                           <p
-                            className={`text-md text-gray-700 space-x-4 ${expandedCourses[course.cous_id] ? 'block' : 'line-clamp-4'}`}
+                            className={`text-md text-gray-700 space-x-4 ${expandedCourses[course._id] ? 'block' : 'line-clamp-4'}`}
                           >
                             <span>{course.description}</span>
                           </p>
@@ -305,10 +306,10 @@ function Home() {
 
                     <div className='absolute bottom-32 transform'>
                       <button
-                        onClick={() => handleToggleDescription(course.cous_id)} // Pass the course ID
+                        onClick={() => handleToggleDescription(course._id)} // Pass the course ID
                         className="mt-3 px-8 text-blue-600 hover:underline focus:outline-none"
                       >
-                        {expandedCourses[course.cous_id] ? "បន្ថយ" : "មើលបន្ថែម"}
+                        {expandedCourses[course._id] ? "បន្ថយ" : "មើលបន្ថែម"}
                       </button>
                     </div>
                   </div>

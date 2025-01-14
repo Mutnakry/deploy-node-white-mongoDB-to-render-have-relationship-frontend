@@ -7,6 +7,7 @@ import HomePage from './View/HomePage';
 import Login from './components/Login'
 import Register from './components/Register';
 import UserLogin from './View/personal/UserLogin';
+import ModalesDetails from './View/modale/ModalePage';
 
 
 const App: React.FC = () => {
@@ -24,6 +25,8 @@ const App: React.FC = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
         <Route path='/userLogin' element={<UserLogin/>}/>
+        <Route path='/modales/:course_id/course' element={<ModalesDetails/>}/>
+
       </Routes>
       <ToastContainer />
     </Router>
