@@ -5,6 +5,7 @@ import { FaLock } from "react-icons/fa";
 import Video from '../../assets/1734583716986WIN_20231125_12_38_52_Pro.mp4'
 import { motion } from 'framer-motion';
 import Navbar from '../../components/Navbar';
+import { API_URL } from '../../services/api.tsx';
 
 
 interface Course {
@@ -59,7 +60,7 @@ const ModalesDetails: React.FC = () => {
     useEffect(() => {
         const fetchModales = async () => {
             try {
-                const response = await axios.get<Modales[]>(`http://localhost:5000/api/modales/${course_id}`);
+                const response = await axios.get<Modales[]>(`${API_URL}api/modales/${course_id}`);
                 setModalesList(response.data);
                 setTimeout(() => {
                     setLoading(false);
@@ -78,7 +79,7 @@ const ModalesDetails: React.FC = () => {
     useEffect(() => {
         const fetchSubModales = async () => {
             try {
-                const response = await axios.get<SubModales[]>('http://localhost:5000/api/submodale');
+                const response = await axios.get<SubModales[]>(`${API_URL}api/submodale`);
                 setSubModales(response.data);
             } catch (err) {
                 setError('Failed to fetch submodules');
