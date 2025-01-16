@@ -52,7 +52,7 @@ function Home() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get(`${API_URL}api/courses`);
+        const response = await axios.get(`${API_URL}/api/courses`);
         setCourses(response.data);
         console.log(response.data);
       } catch (err) {

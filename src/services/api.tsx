@@ -1,3 +1,3 @@
 
 
-export const API_URL = 'https://backend-mongodb-qioa.onrender.com/';
+export const API_URL = 'https://mongodb-backebd-leaning.onrender.com';

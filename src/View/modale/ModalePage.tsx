@@ -62,7 +62,7 @@ const ModalesDetails: React.FC = () => {
     useEffect(() => {
         const fetchModales = async () => {
             try {
-                const response = await axios.get<Modales[]>(`${API_URL}api/modales/${courseId}`);
+                const response = await axios.get<Modales[]>(`${API_URL}/api/modales/${courseId}`);
                 setModalesList(response.data);
                 setTimeout(() => {
                     setLoading(false);
@@ -81,7 +81,7 @@ const ModalesDetails: React.FC = () => {
     useEffect(() => {
         const fetchSubModales = async () => {
             try {
-                const response = await axios.get<SubModales[]>(`${API_URL}api/submodale`);
+                const response = await axios.get<SubModales[]>(`${API_URL}/api/submodale`);
                 setSubModales(response.data);
             } catch (err) {
                 setError('Failed to fetch submodules');

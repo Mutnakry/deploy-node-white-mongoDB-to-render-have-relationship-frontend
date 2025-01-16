@@ -51,7 +51,7 @@ const Register: React.FC = () => {
         console.log(values)
 
         try {
-            const response = await axios.post(`${API_URL}api/users/register`, values);
+            const response = await axios.post(`${API_URL}/api/users/register`, values);
             console.log('Registration successful:', response);
             navigate("/login"); // Redirect after successful registration
         } catch (err) {

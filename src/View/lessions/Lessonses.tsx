@@ -5,7 +5,7 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { MdMenuBook, MdQuestionAnswer } from "react-icons/md";
 import { useParams } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-
+import { API_URL } from '../../services/api.tsx';
 
 import html2canvas from 'html2canvas';
 import { FaRegCopy, FaFileDownload } from "react-icons/fa";
@@ -32,6 +32,7 @@ function CourseModale() {
     const codeBlockRef = useRef<HTMLDivElement>(null);
     const [showFullDescription, setShowFullDescription] = useState<boolean>(false);
     const { courseId, modaleId, submodaleId } = useParams<{ courseId: string; modaleId: string; submodaleId: string }>();
+  
 
 
     useEffect(() => {
@@ -42,7 +43,7 @@ function CourseModale() {
         setLoading(true);
         setTimeout(async () => {
             try {
-                const response = await axios.get<LessonesID[]>(`http://localhost:5000/api/lessions/${courseId}/${modaleId}/${submodaleId}`);
+                const response = await axios.get<LessonesID[]>(`${API_URL}/api/lessions/${courseId}/${modaleId}/${submodaleId}`);
                 setLessonesID(response.data);
                 console.log(response.data);
             } catch (err) {
@@ -149,7 +150,7 @@ function CourseModale() {
                                     {lesson.image_url ? (
                                         <div className="flex justify-center items-center py-2">
                                             <img
-                                                src={`http://localhost:5000${lesson.image_url}`}
+                                                src={`${API_URL}${lesson.image_url}`}
                                                 alt="Lesson Image"
                                                 className="w-full lg:h-96 md:h-72 h-56 object-contain"
                                             />
@@ -164,7 +165,7 @@ function CourseModale() {
                                         <div className="flex justify-center items-center py-2  bg-slate-200 shadow-sm md:p-4">
                                             <video className="rounded" controls>
                                                 <source
-                                                    src={`http://localhost:5000${lesson.video_url}`}
+                                                    src={`${API_URL}${lesson.video_url}`}
                                                     className='rounded'
                                                 />
                                             </video>
