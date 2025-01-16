@@ -8,6 +8,8 @@ import Login from './components/Login'
 import Register from './components/Register';
 import UserLogin from './View/personal/UserLogin';
 import ModalesDetails from './View/modale/ModalePage';
+import HomeDetailLession from './View/lessions/Home.tsx';
+
 
 
 const App: React.FC = () => {
@@ -25,7 +27,12 @@ const App: React.FC = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
         <Route path='/userLogin' element={<UserLogin/>}/>
-        <Route path='/modales/:course_id/course' element={<ModalesDetails/>}/>
+        <Route path='/modales/:courseId/course' element={<ModalesDetails/>}/>
+        {/* <Route path="/course/:categoryId/modales/:detailcategoryId" element={isAuthenticated ? <Lessonses  /> : <Navigate to="/" />}/> */}
+        {/* <Route path="/course/:courseId/modales/:modaleId/lesson/:submodaleId" element={<Lessonses />} /> */}
+
+        <Route path="/course/:courseId/modales/:modaleId/lesson/:submodaleId" element={<HomeDetailLession />} />
+
 
       </Routes>
       <ToastContainer />
@@ -34,3 +41,9 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+
+
+// project 2
+///email=nakrymut375@gmail.com
+///pass=123

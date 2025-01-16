@@ -6,6 +6,8 @@ import Video from '../../assets/1734583716986WIN_20231125_12_38_52_Pro.mp4'
 import { motion } from 'framer-motion';
 import Navbar from '../../components/Navbar';
 import { API_URL } from '../../services/api.tsx';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
 
 
 interface Course {
@@ -38,7 +40,7 @@ interface SubModales {
 }
 
 const ModalesDetails: React.FC = () => {
-    const { course_id } = useParams<{ course_id: string }>();
+    const { courseId } = useParams<{ courseId: string }>();
     const [modalesList, setModalesList] = useState<Modales[]>([]);
     const [subModales, setSubModales] = useState<SubModales[]>([]);
     const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
@@ -60,7 +62,7 @@ const ModalesDetails: React.FC = () => {
     useEffect(() => {
         const fetchModales = async () => {
             try {
-                const response = await axios.get<Modales[]>(`${API_URL}api/modales/${course_id}`);
+                const response = await axios.get<Modales[]>(`${API_URL}api/modales/${courseId}`);
                 setModalesList(response.data);
                 setTimeout(() => {
                     setLoading(false);
@@ -71,10 +73,10 @@ const ModalesDetails: React.FC = () => {
             }
         };
 
-        if (course_id) {
+        if (courseId) {
             fetchModales();
         }
-    }, [course_id]);
+    }, [courseId]);
 
     useEffect(() => {
         const fetchSubModales = async () => {
@@ -107,26 +109,7 @@ const ModalesDetails: React.FC = () => {
 
 
 
-    const SkeletonLoader = () => (
-        <div className="space-y-4 p-4 bg-white shadow rounded-lg border-2 border-blue-500/50">
-            <div className="skeleton-loader h-8 bg-gray-300 w-1/3"></div>
-            <div className="skeleton-loader h-16 bg-gray-300 rounded-md"></div>
-            <div className="skeleton-loader h-8 bg-gray-300 w-1/4"></div>
-            <br />
-            <div className="skeleton-loader h-8 bg-gray-300 w-1/3"></div>
-            <div className="skeleton-loader h-16 bg-gray-300 rounded-md"></div>
-            <div className="skeleton-loader h-8 bg-gray-300 w-1/4"></div>
-            <br />
-            <div className="skeleton-loader h-8 bg-gray-300 w-1/3"></div>
-            <div className="skeleton-loader h-16 bg-gray-300 rounded-md"></div>
-            <div className="skeleton-loader h-8 bg-gray-300 w-1/4"></div>
-            <br />
-            <div className="skeleton-loader h-8 bg-gray-300 w-1/3"></div>
-            <div className="skeleton-loader h-16 bg-gray-300 rounded-md"></div>
-            <div className="skeleton-loader h-8 bg-gray-300 w-1/4"></div>
-        </div>
-
-    );
+    
 
     const handleToggleDescription = () => {
         setShowFullDescription(!showFullDescription);
@@ -146,7 +129,16 @@ const ModalesDetails: React.FC = () => {
 
                 {loading ? (
                     <>
-                        <SkeletonLoader />
+                        {/* <SkeletonLoader /> */}
+                        <div className="h-screen flex justify-center items-center">
+                        <DotLottieReact
+                            src="https://lottie.host/81f92f1b-f4f2-4022-bc46-489ce70373c0/W2ixVM5et2.lottie"
+                            speed={1}
+                            style={{ width: '300px', height: '300px' }}
+                            loop
+                            autoplay
+                        />
+                    </div>
                     </>
                 ) : (
                     <div>
